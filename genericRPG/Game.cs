@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace genericRPG
 {
-    internal class Enemy:NPC
+    internal class Game
     {
-        public Enemy(string name, int level, string type, int maxHealthPoints) : base(name,level, type, maxHealthPoints) { }
+        public Game() { }
+        //game options
     }
 }
