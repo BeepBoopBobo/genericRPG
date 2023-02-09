@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.FileIO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
@@ -9,61 +10,68 @@ namespace genericRPG
 {
     internal class Menu
     {
-        private int positionIndex;
         private bool isActive;
-        private Dictionary<int, string> menuOptions= new Dictionary<int, string>();
         //TODO: dictionary with delegates/methods?
 
         public int PositionIndex { get; set; }
         public bool IsActive { get; set; }
+
+
         public Menu() 
         {
-            menuOptions.Add(0, "START NEW GAME");
-            menuOptions.Add(1, "OPTIONS");
-            menuOptions.Add(2, "EXIT");
         }
 
-        public void printHeader()
+        //prints options header
+        public void PrintHeader(Dictionary<int, string> headers)
         {
-            Console.WriteLine("MAIN MENU");
-            Console.WriteLine("---------");
-        }
-        public void printOptions()
-        {
-            foreach(var menuOption in menuOptions)
+            foreach (var header in headers)
             {
-                Console.BackgroundColor = PositionIndex == menuOption.Key ? ConsoleColor.White : ConsoleColor.Black;
-                Console.ForegroundColor = PositionIndex == menuOption.Key ? ConsoleColor.Black : ConsoleColor.White;
-                Console.WriteLine("{0}", menuOption.Value);
+                Console.WriteLine("\t{0}", header.Value);
+            }
+            Console.WriteLine("\t> navigate by UP and DOWN arrows, confirm choice with ENTER\n");
+        }
+
+        //prints out given options with highlighted active item
+        public void PrintOptions(Dictionary<int, string> options)
+        {
+
+            foreach (var option in options)
+            {
+                //change background color to white if active
+                Console.BackgroundColor = PositionIndex == option.Key ? ConsoleColor.White : ConsoleColor.Black;
+                //change text color to black if active
+                Console.ForegroundColor = PositionIndex == option.Key ? ConsoleColor.Black : ConsoleColor.White;
+                Console.WriteLine("{0}. {1}", option.Key,option.Value);
                 Console.ResetColor();
             }
         }
-        public void handleInput()
+
+        //handles navigation and selecting items from given options
+        //TODO: pass prop with avilable options
+        public string HandleMenuOptions(Dictionary<int, string> options, Dictionary<int, string> headers)
         {
-            Console.WriteLine("input is");
-            while (this.IsActive )
+            while (this.IsActive)
             {
                 Console.Clear();
-                this.printHeader();
-                this.printOptions();
+                this.PrintHeader(headers);
+                this.PrintOptions(options);
 
                 ConsoleKeyInfo input= Console.ReadKey();
                 switch (input.Key) 
                 {
                     case ConsoleKey.DownArrow:
-                        if (this.PositionIndex < menuOptions.Count-1) { this.PositionIndex++; }
+                        if (this.PositionIndex < options.Count-1) { this.PositionIndex++; }
                         break;
                     case ConsoleKey.UpArrow:
                         if (this.PositionIndex > 0) { this.PositionIndex--; }
                         break;
                     case ConsoleKey.Enter:
-                        //TODO: 
+                        return options.ElementAt(this.PositionIndex).Value;
+                    default: 
                         break;
-                    default: break;
                 }
-
-
             }
+            return "EXIT";
         }
     }
 }

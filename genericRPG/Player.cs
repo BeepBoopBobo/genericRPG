@@ -4,21 +4,17 @@ namespace genericRPG
 {
     internal class Player : Character
     {
+        private int experience;
+        private int Experience { get; set; }
+
         public Player(string name, int level, string type, int maxHealthPoints) : base(name, level, type, maxHealthPoints)
         {
-        }
-  
-        public Player CreatePlayer()
+            this.Experience = 0;
+        }        
+        public Player() : base()
         {
-            Console.WriteLine("Enter name of your character:");
-            
-            this.Name= Console.ReadLine();
-            
-            return this;
-            //Console.WriteLine("");
-            //Console.ReadLine();
-            //Console.WriteLine("",);
-            //Console.ReadLine();
+            this.Experience = 0;
+
         }
     }
 }

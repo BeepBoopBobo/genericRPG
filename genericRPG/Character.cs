@@ -37,27 +37,47 @@ namespace genericRPG
             this.Type = type;
             this.Alive = true;
         }
-        public void addItemToInv(Item item)
+        public Character()
+        {
+            this.Level = 0;
+            this.Name = "";
+            this.Type = "";
+            this.MaxHealthPoints = 100;
+            this.CurrHealthPoints = 100;
+            this.Alive = true;
+        }
+        public void AddItemToInv(Item item)
         {
             this.inventory.Add(item);
         }
-        public void removeItemFromInv(Item item) 
+        public void RemoveItemFromInv(Item item) 
         {
-            this.inventory.Remove(item); 
+            if(this.inventory.IndexOf(item) != -1)
+            {
+                this.inventory.Remove(item);
+                Console.WriteLine("{0} removed from {1}'s inventory.", item.Name, this.Name);
+            }
+            else
+            {
+                Console.WriteLine("{0} is not in {1}'s inventory.", item.Name, this.Name);
+            }
         }
 
-        public void takeDamage(int damage)
+        public void TakeDamage(int damage)
         {
             //TODO: damage negation
             this.CurrHealthPoints-= damage;
             Console.WriteLine("{0} took {1} points of damage.", this.Name, damage);
             if (this.CurrHealthPoints <= 0) 
             {
-                this.alive = false;
+                this.Alive = false;
+                Console.BackgroundColor = ConsoleColor.Red;
                 Console.WriteLine("{0} died.", this.Name);
+                Console.BackgroundColor = ConsoleColor.Black;
+
             }
         }
-        public void getHealed(int heal) 
+        public void GetHealed(int heal) 
         {
             this.CurrHealthPoints+= heal;
             if(this.CurrHealthPoints> this.MaxHealthPoints) 
@@ -65,18 +85,22 @@ namespace genericRPG
                 Console.WriteLine("{0} healed for {1} points.", this.Name, this.CurrHealthPoints-this.MaxHealthPoints);
                 this.CurrHealthPoints = this.MaxHealthPoints;
             }
+            else
+            {
+                Console.WriteLine("{0} is at full health already.", this.Name);
+            }
         }
 
-        public void attack( Character target, Weapon weapon)
+        public void Attack( Character target, Weapon weapon)
         {
             Console.WriteLine("{0} attacks {1} with {2}", this.Name, target.Name, weapon.Name);
-            target.takeDamage(weapon.Damage);
+            target.TakeDamage(weapon.Damage);
         }
-        public void printInfo()
+        public void PrintInfo()
         {
-            Console.WriteLine("\nCharacter '{0}' #{1}, level: {2}\n{3}/{4} HP", this.Name, this.id,this.Level, this.CurrHealthPoints, this.MaxHealthPoints);
+            Console.WriteLine("\nCharacter '{0}' #{1}, level: {2}\n{3}/{4} HP", this.Name, this.id, this.Level, this.CurrHealthPoints, this.MaxHealthPoints);
         }
-        public void getItemFromInventory()
+        public void GetItemFromInventory()
         {
             Console.WriteLine("not yet boi");
         }

@@ -6,21 +6,35 @@ namespace genericRPG
     {
         static void Main(string[] args)
         {
+            Consumable apple = new Consumable("apple", "food", 5, "A shiny apple.");
+            NPC george = new NPC("George", 2, "humanoid", 100);
+            Merchant jeff = new Merchant("Jeff", 2, "humanoid", 100);
+
+            Game game = new Game();
+            game.Run();
+            //TODO: initialize game
+            //play until player quits or dies (:
+
+
             //MENU OPTIONS
             //start new game[0]
             //exit game[1]
-            Menu mainMenu= new Menu();
-            mainMenu.IsActive= true;
-            mainMenu.handleInput();
+
+
+            //mainMenuOptions.Add(0, "START NEW GAME");
+            //mainMenuOptions.Add(1, "OPTIONS");
+            //mainMenuOptions.Add(2, "EXIT");
+
+            //combatMenuOptions.Add(0, "ATTACK");
+            //combatMenuOptions.Add(1, "HEAL");
+            //combatMenuOptions.Add(2, "LEAVE");
+
 
             //Player playerCharacter = new Player("",1, "humanoid", 100);
             //playerCharacter.CreatePlayer();
 
             //playerCharacter.printInfo();
-            Consumable apple = new Consumable("apple", "food", 5, "A shiny apple.");
-            NPC george = new NPC("George", 2, "humanoid", 100 );
-            Merchant jeff = new Merchant("Jeff", 2, "humanoid", 100);
-            Weapon sword = new Weapon("Rusty sword","one handed sword" ,10, "Might have deal some damage over time due to infection.", 10, 0);
+
             //george.printInfo();
             //jeff.printInfo();
             //george.attack(jeff, sword);
